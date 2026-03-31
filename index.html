@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>朱心蕊 | AIGC Visual Designer</title>
+  <meta name="description" content="朱心蕊 - AIGC视觉设计师个人作品集">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --morandi-rose: #C4A99B;
+      --morandi-sage: #A8B5A2;
+      --morandi-blue: #9DAEC0;
+      --morandi-mauve: #B8A9C4;
+
+      --bg-primary: #F6F2EE;
+      --bg-warm: #F0EAE4;
+      --bg-card: #FFFFFF;
+      --text-primary: #3A3535;
+      --text-secondary: #6E6565;
+      --text-light: #A09494;
+      --accent: #C4A99B;
+      --accent-dark: #A8877A;
+      --border: #E4DCD6;
+      --shadow-sm: 0 2px 12px rgba(120, 90, 70, 0.06);
+      --shadow-md: 0 8px 32px rgba(120, 90, 70, 0.08);
+      --shadow-lg: 0 16px 56px rgba(120, 90, 70, 0.12);
+      --radius: 20px;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ===== Geometric Decorations ===== */
+    .geo-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .geo-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px solid;
+      pointer-events: none;
+    }
+
+    .geo-diamond {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      transform: rotate(45deg);
+      pointer-events: none;
+    }
+
+    .geo-line {
+      position: absolute;
+      height: 1px;
+      pointer-events: none;
+    }
+
+    .geo-dots {
+      position: absolute;
+      pointer-events: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .geo-dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* ===== Navigation ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(246, 242, 238, 0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transition: var(--transition);
+    }
+
+    .nav.scrolled {
+      padding: 12px 48px;
+      box-shadow: 0 1px 20px rgba(120, 90, 70, 0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 1px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: var(--transition);
+      transform: translateX(-50%);
+      border-radius: 1px;
+    }
+
+    .nav-links a:hover { color: var(--accent-dark); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 7px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent-dark);
+      background: rgba(196, 169, 155, 0.08);
+    }
+
+    .lang-btn .active-lang { color: var(--accent-dark); font-weight: 600; }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 48px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg .blob1 {
+      position: absolute;
+      top: -5%;
+      right: -8%;
+      width: 55%;
+      height: 70%;
+      background: radial-gradient(ellipse, rgba(196, 169, 155, 0.15) 0%, transparent 70%);
+      border-radius: 40% 60% 55% 45%;
+      animation: blobFloat 20s ease-in-out infinite;
+    }
+
+    .hero-bg .blob2 {
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 40%;
+      height: 50%;
+      background: radial-gradient(ellipse, rgba(168, 181, 162, 0.12) 0%, transparent 70%);
+      border-radius: 55% 45% 40% 60%;
+      animation: blobFloat 25s ease-in-out infinite reverse;
+    }
+
+    .hero-bg .blob3 {
+      position: absolute;
+      top: 30%;
+      left: 20%;
+      width: 30%;
+      height: 40%;
+      background: radial-gradient(ellipse, rgba(157, 174, 192, 0.08) 0%, transparent 70%);
+      border-radius: 45% 55% 60% 40%;
+      animation: blobFloat 18s ease-in-out infinite;
+    }
+
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(15px, -20px) scale(1.03); }
+      66% { transform: translate(-10px, 15px) scale(0.97); }
+    }
+
+    .hero-content {
+      display: flex;
+      align-items: flex-end;
+      gap: 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
+    }
+
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 320px;
+    }
+
+    .hero-photo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 160px 160px;
+      background: linear-gradient(180deg, var(--bg-warm) 0%, rgba(196, 169, 155, 0.15) 100%);
+      padding-top: 40px;
+    }
+
+    .hero-photo-card img {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-photo-wrap:hover .hero-photo-card img {
+      transform: scale(1.02) translateY(-4px);
+    }
+
+    .hero-photo-deco1 {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--morandi-sage);
+      opacity: 0.4;
+      animation: spinSlow 30s linear infinite;
+    }
+
+    .hero-photo-deco2 {
+      position: absolute;
+      bottom: 40px;
+      left: -20px;
+      width: 50px;
+      height: 50px;
+      background: var(--morandi-blue);
+      opacity: 0.12;
+      border-radius: 12px;
+      transform: rotate(30deg);
+      animation: floatDeco 8s ease-in-out infinite;
+    }
+
+    .hero-photo-deco3 {
+      position: absolute;
+      top: 60px;
+      left: -16px;
+      width: 8px;
+      height: 8px;
+      background: var(--morandi-mauve);
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .hero-photo-deco4 {
+      position: absolute;
+      bottom: 100px;
+      right: -24px;
+      width: 6px;
+      height: 6px;
+      background: var(--morandi-rose);
+      transform: rotate(45deg);
+      opacity: 0.5;
+      animation: pulse 4s ease-in-out infinite 1s;
+    }
+
+    @keyframes spinSlow { to { transform: rotate(360deg); } }
+    @keyframes floatDeco {
+      0%, 100% { transform: rotate(30deg) translateY(0); }
+      50% { transform: rotate(35deg) translateY(-12px); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1) rotate(45deg); }
+      50% { opacity: 0.7; transform: scale(1.5) rotate(45deg); }
+    }
+
+    .hero-text {
+      flex: 1;
+      padding-bottom: 100px;
+    }
+
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .hero-text .subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--accent-dark);
+      margin-bottom: 28px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hero-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .hero-intro p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 520px;
+    }
+
+    .hero-contact-inline {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .hero-contact-inline a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .hero-contact-inline a:hover { color: var(--accent-dark); }
+
+    .hero-contact-inline svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.6;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-tags span {
+      padding: 6px 18px;
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-tags span:nth-child(4n+1):hover { border-color: var(--morandi-rose); color: var(--morandi-rose); }
+    .hero-tags span:nth-child(4n+2):hover { border-color: var(--morandi-sage); color: var(--morandi-sage); }
+    .hero-tags span:nth-child(4n+3):hover { border-color: var(--morandi-blue); color: var(--morandi-blue); }
+    .hero-tags span:nth-child(4n+4):hover { border-color: var(--morandi-mauve); color: var(--morandi-mauve); }
+
+    /* Color bar accent */
+    .color-bar {
+      display: flex;
+      gap: 6px;
+      margin: 20px 0 0;
+    }
+
+    .color-bar span {
+      width: 28px;
+      height: 4px;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .color-bar span:nth-child(1) { background: var(--morandi-rose); }
+    .color-bar span:nth-child(2) { background: var(--morandi-sage); }
+    .color-bar span:nth-child(3) { background: var(--morandi-blue); }
+    .color-bar span:nth-child(4) { background: var(--morandi-mauve); }
+
+    .color-bar:hover span { width: 40px; }
+
+    /* ===== Section ===== */
+    .section {
+      padding: 60px 48px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .section-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+    }
+
+    .section-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 1px;
+    }
+
+    .section-subtitle {
+      font-size: 11px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 500;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ===== Experience ===== */
+    .timeline {
+      position: relative;
+      padding-left: 48px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--morandi-rose), var(--morandi-sage), var(--morandi-blue));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      padding: 28px 32px;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .timeline-item:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+      border-color: var(--accent);
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -44px;
+      top: 32px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2.5px solid var(--morandi-rose);
+      background: var(--bg-primary);
+    }
+
+    .timeline-item:nth-child(2)::before {
+      border-color: var(--morandi-sage);
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 37px;
+      width: 28px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-company {
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .timeline-role {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+    .timeline-item:nth-child(1) .timeline-role {
+      background: rgba(196, 169, 155, 0.12);
+      color: var(--morandi-rose);
+    }
+
+    .timeline-item:nth-child(2) .timeline-role {
+      background: rgba(168, 181, 162, 0.15);
+      color: var(--morandi-sage);
+    }
+
+    .timeline-date {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-left: auto;
+      letter-spacing: 1px;
+    }
+
+    .timeline-details {
+      list-style: none;
+    }
+
+    .timeline-details li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 6px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .timeline-details li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    /* ===== Portfolio ===== */
+    .portfolio-grid {
+      display: grid;
+      gap: 48px;
+    }
+
+    .portfolio-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .portfolio-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-6px);
+    }
+
+    .portfolio-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      z-index: 2;
+    }
+
+    .portfolio-card:nth-child(1)::before {
+      background: linear-gradient(to right, var(--morandi-rose), var(--morandi-mauve));
+    }
+
+    .portfolio-card:nth-child(2)::before {
+      background: linear-gradient(to right, var(--morandi-blue), var(--morandi-sage));
+    }
+
+    .video-wrap {
+      position: relative;
+      background: #1a1816;
+    }
+
+    .portfolio-video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+    }
+
+    .portfolio-info {
+      padding: 28px 36px 32px;
+      position: relative;
+    }
+
+    .portfolio-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .portfolio-info p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .portfolio-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .portfolio-badge {
+      padding: 4px 14px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-rose { background: rgba(196, 169, 155, 0.12); color: var(--morandi-rose); }
+    .badge-sage { background: rgba(168, 181, 162, 0.15); color: var(--morandi-sage); }
+    .badge-blue { background: rgba(157, 174, 192, 0.15); color: var(--morandi-blue); }
+    .badge-mauve { background: rgba(184, 169, 196, 0.15); color: var(--morandi-mauve); }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    .footer-colors {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .footer-colors span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-colors span:nth-child(1) { background: var(--morandi-rose); }
+    .footer-colors span:nth-child(2) { background: var(--morandi-sage); }
+    .footer-colors span:nth-child(3) { background: var(--morandi-blue); }
+    .footer-colors span:nth-child(4) { background: var(--morandi-mauve); }
+
+    .footer-colors:hover span { transform: scale(1.4); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-light);
+      letter-spacing: 1px;
+    }
+
+    /* ===== Animations ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .nav { padding: 14px 20px; }
+      .nav.scrolled { padding: 10px 20px; }
+      .nav-right .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(246, 242, 238, 0.98); backdrop-filter: blur(20px); flex-direction: column; padding: 24px; gap: 20px; border-bottom: 1px solid var(--border); }
+      .nav-right .nav-links.open { display: flex; }
+      .mobile-menu-btn { display: flex; }
+
+      .hero { padding: 0 24px; min-height: auto; padding-top: 80px; padding-bottom: 40px; }
+      .hero-content { flex-direction: column; align-items: center; text-align: center; gap: 0; padding-top: 20px; }
+      .hero-photo-wrap { width: 220px; }
+      .hero-text { padding-bottom: 0; }
+      .hero-text h1 { font-size: 36px; }
+      .hero-text .subtitle { font-size: 14px; }
+      .hero-tags { justify-content: center; }
+      .hero-contact-inline { justify-content: center; }
+      .color-bar { justify-content: center; }
+      .hero-intro p { max-width: 100%; }
+
+      .section { padding: 40px 24px 60px; }
+      .section-num { font-size: 36px; }
+      .section-title { font-size: 20px; }
+
+      .timeline { padding-left: 36px; }
+      .timeline-item { padding: 20px 20px; }
+      .timeline-item::before { left: -32px; }
+      .timeline-item::after { left: -20px; width: 16px; }
+      .timeline-header { flex-direction: column; gap: 6px; }
+      .timeline-date { margin-left: 0; }
+
+      .portfolio-info { padding: 20px 24px 24px; }
+
+      .footer { padding: 36px 24px; }
+    }
+
+    /* ===== Language ===== */
+    [data-lang="zh"] .en { display: none; }
+    [data-lang="en"] .zh { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo">
+      <span class="zh">朱心蕊</span>
+      <span class="en">Xinrui Zhu</span>
+    </div>
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#experience"><span class="zh">经历</span><span class="en">Experience</span></a></li>
+        <li><a href="#portfolio"><span class="zh">作品</span><span class="en">Portfolio</span></a></li>
+      </ul>
+      <button class="lang-btn" id="langToggle" aria-label="Switch Language">
+        <span id="langZh" class="active-lang">中</span>
+        <span style="color:var(--border)">/</span>
+        <span id="langEn">EN</span>
+      </button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="blob1"></div>
+      <div class="blob2"></div>
+      <div class="blob3"></div>
+    </div>
+
+    <!-- Geometric decorations on hero -->
+    <div class="geo-ring" style="width:120px;height:120px;border-color:var(--morandi-sage);opacity:0.15;top:12%;right:8%;animation:spinSlow 40s linear infinite"></div>
+    <div class="geo-diamond" style="background:var(--morandi-blue);opacity:0.1;bottom:18%;right:15%;animation:floatDeco 10s ease-in-out infinite"></div>
+    <div class="geo-ring" style="width:60px;height:60px;border-color:var(--morandi-mauve);opacity:0.12;bottom:30%;left:5%;animation:spinSlow 25s linear infinite reverse"></div>
+
+    <div class="hero-content">
+      <div class="hero-photo-wrap reveal-left">
+        <div class="hero-photo-card">
+          <img src="assets/photo.png" alt="朱心蕊">
+        </div>
+        <div class="hero-photo-deco1"></div>
+        <div class="hero-photo-deco2"></div>
+        <div class="hero-photo-deco3"></div>
+        <div class="hero-photo-deco4"></div>
+      </div>
+
+      <div class="hero-text reveal-right">
+        <h1>
+          <span class="zh">朱心蕊</span>
+          <span class="en">Xinrui Zhu</span>
+        </h1>
+        <div class="subtitle">
+          <span class="zh">AIGC 视觉设计师</span>
+          <span class="en">AIGC Visual Designer</span>
+        </div>
+
+        <div class="hero-intro">
+          <p>
+            <span class="zh">天津外国语大学 · 数字媒体艺术专业，22岁。善于创新，喜欢钻研，曾在一周内完成一款独立中式解谜游戏 demo。</span>
+            <span class="en">Digital Media Art, Tianjin Foreign Studies University, 22 y/o. Innovative and dedicated — once built an indie Chinese puzzle game demo within a single week.</span>
+          </p>
+          <p>
+            <span class="zh">熟练运用 Midjourney、可灵、即梦、Gemini、Vidu 等 AIGC 工具，掌握 Pr、Ae、达芬奇、Figma 等核心设计软件。</span>
+            <span class="en">Proficient in AIGC tools including Midjourney, Kling, Jimeng, Gemini, and Vidu, as well as core design software like Pr, Ae, DaVinci, and Figma.</span>
+          </p>
+          <p>
+            <span class="zh">具备 AI 视觉内容审美与真伪识别能力，能高效判断生成视频与图像质量并优化创意方向。</span>
+            <span class="en">Skilled in AI visual content aesthetics and authenticity evaluation, efficiently assessing generated video/image quality and optimizing creative direction.</span>
+          </p>
+          <div class="hero-contact-inline">
+            <a href="mailto:2590761086@qq.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              2590761086@qq.com
+            </a>
+            <a href="tel:15256660762">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              15256660762
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-tags">
+          <span class="reveal stagger-1">Midjourney</span>
+          <span class="reveal stagger-2">Vidu</span>
+          <span class="reveal stagger-3">Premiere Pro</span>
+          <span class="reveal stagger-4">After Effects</span>
+          <span class="reveal stagger-5">Figma</span>
+          <span class="reveal stagger-3">DaVinci</span>
+        </div>
+
+        <div class="color-bar">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section" id="experience">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <div class="section-title-group">
+        <h2 class="section-title">
+          <span class="zh">工作经历</span>
+          <span class="en">Experience</span>
+        </h2>
+        <span class="section-subtitle">
+          <span class="zh">实习与项目经验</span>
+          <span class="en">Internships & Projects</span>
+        </span>
+      </div>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-header">
+          <span class="timeline-company">
+            <span class="zh">生数科技（Vidu）</span>
+            <span class="en">Shengshu Technology (Vidu)</span>
+          </span>
+          <span class="timeline-role">
+            <span class="zh">提示词工程师</span>
+            <span class="en">Prompt Engineer</span>
+          </span>
+          <span class="timeline-date">2025.07 — 2026.01</span>
+        </div>
+        <ul class="timeline-details">
+          <li>
+            <span class="zh">AIGC 特效模版研发：在 TikTok、Pixverse 等平台收集爆款视频特效，基于 RICE 模型评估后立项，撰写成功率 >85% 的高稳定性特效提示词。已上线"圣诞小人、变身星期三"等近 50 个特效脚本</span>
+            <span class="en">AIGC VFX template R&D: Collected trending effects from TikTok & Pixverse, evaluated via RICE model, authored high-stability prompts with >85% success rate. Launched ~50 effect scripts</span>
+          </li>
+          <li>
+            <span class="zh">电商 Agent 优化：深度参与基于 Vidu 模型的电商 Agent 系统测试，撰写海外场景下故事性电商脚本，为美妆、电子产品等品类定制专属提示词框架，推动 Agent 成功上线</span>
+            <span class="en">E-commerce Agent: Participated in Vidu-based Agent testing, crafted narrative scripts for overseas markets, customized prompt frameworks for beauty & electronics categories</span>
+          </li>
+          <li>
+            <span class="zh">联想词迭代：调试 APP 端提示词联想逻辑，加入故事感联想，降低泛 C 用户创作门槛；加入多语言融合功能吸引海外用户入驻</span>
+            <span class="en">Prompt suggestion: Tuned app prompt suggestion logic with narrative associations, lowering creative barriers; integrated multilingual features for international users</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-header">
+          <span class="timeline-company">
+            <span class="zh">澜景科技</span>
+            <span class="en">Lanjing Technology</span>
+          </span>
+          <span class="timeline-role">
+            <span class="zh">UI 设计师</span>
+            <span class="en">UI Designer</span>
+          </span>
+          <span class="timeline-date">2025.05 — 2025.07</span>
+        </div>
+        <ul class="timeline-details">
+          <li>
+            <span class="zh">视觉设计：负责澜精灵 2.0 版本 AI 页面动效、Icon 设计、UI 界面绘制与视觉规范搭建，使用 Figma 输出 UI 页面 80+，采用"原创构思—AIGC 参考—手动优化"流程</span>
+            <span class="en">Visual design: Led AI page motion design, icon design, UI interface and visual standards for v2.0, delivering 80+ Figma pages using "original concept — AIGC reference — manual refinement"</span>
+          </li>
+          <li>
+            <span class="zh">体验优化：观察 APP 端与网页端不同操作习惯，基于原型测试提出 10 余条交互与视觉优化建议，二次测试后 APP 端用户操作准确性提升 50%</span>
+            <span class="en">UX optimization: Analyzed platform-specific user behaviors, proposed 10+ improvements based on prototype testing, achieving 50% improvement in app operation accuracy</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="section" id="portfolio">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <div class="section-title-group">
+        <h2 class="section-title">
+          <span class="zh">作品展示</span>
+          <span class="en">Portfolio</span>
+        </h2>
+        <span class="section-subtitle">
+          <span class="zh">精选视频作品</span>
+          <span class="en">Selected Video Works</span>
+        </span>
+      </div>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-card reveal">
+        <div class="video-wrap">
+          <video class="portfolio-video" controls preload="metadata" playsinline>
+            <source src="assets/work1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="portfolio-info">
+          <h3>Lemon</h3>
+          <p>
+            <span class="zh">一款 AIGC 生成的夏日解暑的饮料广告，使用 Tapnow 平台制作，从脚本—分镜—生图—生视频—生 BGM—剪辑合成皆为一人独立完成。</span>
+            <span class="en">A summer refreshment beverage commercial generated with AIGC, produced on the Tapnow platform. Every step — from script, storyboard, image generation, video generation, BGM creation, to final editing — was independently completed by one person.</span>
+          </p>
+          <div class="portfolio-badges">
+            <span class="portfolio-badge badge-rose">AIGC</span>
+            <span class="portfolio-badge badge-mauve">Tapnow</span>
+            <span class="portfolio-badge badge-blue">
+              <span class="zh">独立完成</span>
+              <span class="en">Solo Project</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="video-wrap">
+          <video class="portfolio-video" controls preload="metadata" playsinline>
+            <source src="assets/work2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="portfolio-info">
+          <h3>
+            <span class="zh">《平行天津》</span>
+            <span class="en">"Parallel Tianjin"</span>
+          </h3>
+          <p>
+            <span class="zh">特效类城市宣传片，使用 AE、PR 制作，实地无人机取景，2024 年第 12 届全国高校数字艺术设计大赛（NCDA），荣获省级三等奖。</span>
+            <span class="en">A VFX city promotional film produced with After Effects and Premiere Pro, featuring on-location drone footage. Won provincial third prize at the 12th National College Digital Art Design Competition (NCDA) in 2024.</span>
+          </p>
+          <div class="portfolio-badges">
+            <span class="portfolio-badge badge-sage">After Effects</span>
+            <span class="portfolio-badge badge-blue">Premiere Pro</span>
+            <span class="portfolio-badge badge-rose">
+              <span class="zh">NCDA 省级三等奖</span>
+              <span class="en">NCDA Provincial 3rd Prize</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-colors">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p class="footer-copy">
+      <span class="zh">&copy; 2026 朱心蕊 · AIGC 视觉设计师</span>
+      <span class="en">&copy; 2026 Xinrui Zhu · AIGC Visual Designer</span>
+    </p>
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const langToggle = document.getElementById('langToggle');
+    const langZh = document.getElementById('langZh');
+    const langEn = document.getElementById('langEn');
+
+    langToggle.addEventListener('click', () => {
+      const next = html.dataset.lang === 'zh' ? 'en' : 'zh';
+      html.dataset.lang = next;
+      html.lang = next === 'zh' ? 'zh-CN' : 'en';
+      langZh.classList.toggle('active-lang', next === 'zh');
+      langEn.classList.toggle('active-lang', next === 'en');
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    mobileMenuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
