@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amber | Portfolio</title>
+  <meta name="description" content="Amber · 朱心蕊 - AIGC视觉设计师个人作品集">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+    :root {
+      --green: #8BA888;
+      --green-light: #B5CCAE;
+      --green-pale: rgba(139,168,136,0.12);
+      --bg: #FDFCFA;
+      --tx: #1A1A1A;
+      --tx2: #555;
+      --tx3: #999;
+      --line: #E0DCD6;
+      --card: #FFFFFF;
+    }
+
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;
+      background:var(--bg);color:var(--tx);
+      line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    }
+    b{font-weight:600}
+
+    /* ——— Decorative stars & squares ——— */
+    .star{position:absolute;color:var(--green);pointer-events:none;opacity:0.35}
+    .star.lg{font-size:28px}
+    .star.md{font-size:18px}
+    .star.sm{font-size:13px}
+    .sq{
+      position:absolute;width:8px;height:8px;
+      background:var(--tx);opacity:0.08;pointer-events:none;
+    }
+
+    @keyframes twinkle{0%,100%{opacity:0.2;transform:scale(0.85)}50%{opacity:0.5;transform:scale(1.15)}}
+    @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @keyframes bubbleDrift1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(4px,-6px) scale(1.05)}50%{transform:translate(-2px,-10px) scale(0.97)}75%{transform:translate(6px,-4px) scale(1.03)}}
+    @keyframes bubbleDrift2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-6px,4px) scale(1.04)}66%{transform:translate(4px,-6px) scale(0.96)}}
+
+    /* ——— Nav ——— */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:18px 48px;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(253,252,250,0.75);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+      transition:all 0.4s ease;
+    }
+    .nav.scrolled{padding:12px 48px;box-shadow:0 0 0 1px var(--line)}
+
+    .nav-logo{font-family:'Dancing Script',cursive;font-size:20px;font-weight:600;letter-spacing:1px}
+
+    .nav-r{display:flex;align-items:center;gap:28px}
+    .nav-links{display:flex;gap:24px;list-style:none}
+    .nav-links a{
+      text-decoration:none;color:var(--tx3);font-size:10px;
+      font-weight:500;letter-spacing:3px;text-transform:uppercase;transition:color 0.3s;
+    }
+    .nav-links a:hover{color:var(--tx)}
+
+    .lang-btn{
+      padding:4px 11px;border:1px solid var(--line);border-radius:14px;
+      background:transparent;cursor:pointer;font-size:10px;font-weight:600;
+      letter-spacing:1px;color:var(--tx3);transition:all 0.3s;font-family:inherit;
+    }
+    .lang-btn:hover{border-color:var(--green);color:var(--tx2)}
+    .lang-btn .on{color:var(--tx)}
+
+    .mob-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+    .mob-btn span{display:block;width:18px;height:1px;background:var(--tx)}
+
+    /* ——— Hero ——— */
+    .hero{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      padding:100px 48px 60px;position:relative;overflow:hidden;
+    }
+
+    .hero-inner{
+      display:flex;flex-direction:column;align-items:center;
+      text-align:center;position:relative;z-index:1;
+      max-width:800px;width:100%;
+    }
+
+    .hero-top-label{
+      font-size:9px;letter-spacing:4px;text-transform:uppercase;
+      color:var(--tx3);margin-bottom:12px;font-weight:500;
+    }
+
+    .hero-script{
+      font-family:'Dancing Script',cursive;
+      font-size:clamp(56px,10vw,100px);font-weight:700;
+      line-height:1;margin-bottom:4px;
+      position:relative;display:inline-block;
+    }
+
+    .hero-cn{
+      font-family:'Noto Sans SC',sans-serif;
+      font-size:16px;font-weight:400;letter-spacing:6px;
+      color:var(--tx2);margin-bottom:32px;
+    }
+
+    .hero-photo-area{
+      position:relative;width:220px;margin:0 auto 28px;
+    }
+    .hero-photo-area img{
+      width:100%;display:block;
+      filter:drop-shadow(0 8px 24px rgba(0,0,0,0.06));
+      transition:transform 0.5s ease;
+    }
+    .hero-photo-area:hover img{transform:scale(1.02) translateY(-3px)}
+
+    .hero-dotarc{
+      position:absolute;width:280px;height:280px;
+      top:50%;left:50%;transform:translate(-50%,-50%);
+      border:1.5px dashed var(--green-light);border-radius:50%;
+      opacity:0.35;pointer-events:none;
+      animation:spin 80s linear infinite;
+    }
+    @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+    .hero-subtitle{
+      font-family:'Dancing Script',cursive;
+      font-size:16px;color:var(--tx2);margin-bottom:8px;
+    }
+
+    .hero-edu{
+      font-size:11px;color:var(--tx3);letter-spacing:0.5px;margin-bottom:24px;
+    }
+
+    /* ——— Contact row (prominent) ——— */
+    .contact-row{
+      display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:26px;
+    }
+    .contact-row a{
+      display:flex;align-items:center;gap:6px;
+      text-decoration:none;font-size:12px;color:var(--tx2);
+      letter-spacing:0.5px;transition:all 0.3s;
+      padding:6px 16px;border-radius:20px;
+      background:rgba(139,168,136,0.08);border:1px solid rgba(139,168,136,0.15);
+    }
+    .contact-row a:hover{color:var(--green);background:rgba(139,168,136,0.15);border-color:var(--green-light)}
+    .contact-row svg{width:13px;height:13px;opacity:0.5}
+
+    /* ——— Keyword bubbles ——— */
+    .k-bubbles{
+      position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;
+    }
+    .k-bubble{
+      position:absolute;
+      padding:5px 14px;border-radius:20px;
+      font-size:10px;font-weight:500;
+      color:var(--green);
+      background:rgba(139,168,136,0.07);
+      border:1px solid rgba(139,168,136,0.12);
+      opacity:0.45;
+      white-space:nowrap;
+    }
+
+    .skill-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:24px}
+    .skill-tags span{
+      padding:3px 12px;border-radius:14px;font-size:10px;font-weight:500;
+      letter-spacing:0.5px;border:1px solid var(--line);color:var(--tx2);
+      background:var(--card);transition:all 0.3s;
+    }
+    .skill-tags span:hover{border-color:var(--green);color:var(--green)}
+
+    /* ——— Hero evaluation ——— */
+    .hero-eval{
+      max-width:580px;text-align:left;
+      padding:20px 24px;border-radius:12px;
+      background:rgba(139,168,136,0.04);
+      border:1px solid rgba(139,168,136,0.1);
+    }
+    .hero-eval p{font-size:12px;color:var(--tx2);line-height:1.9;margin-bottom:4px}
+    .hero-eval p:last-child{margin-bottom:0}
+
+    /* ——— Section ——— */
+    .sec{padding:48px 48px 60px;max-width:960px;margin:0 auto;position:relative}
+
+    .sec-head{
+      display:flex;align-items:center;gap:14px;margin-bottom:32px;
+    }
+    .sec-n{
+      font-family:'Dancing Script',cursive;
+      font-size:32px;font-weight:600;color:var(--green);line-height:1;
+    }
+    .sec-t{font-size:16px;font-weight:600;letter-spacing:1px}
+    .sec-s{font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:3px;font-weight:500}
+    .sec-l{flex:1;height:1px;background:linear-gradient(to right,var(--line),transparent)}
+
+    .sec-star{
+      position:absolute;color:var(--green);opacity:0.25;pointer-events:none;
+    }
+
+    /* ——— Experience ——— */
+    .tl{padding-left:32px;position:relative}
+    .tl::before{
+      content:'';position:absolute;left:4px;top:4px;bottom:4px;
+      width:1px;border-left:1.5px dashed var(--green-light);opacity:0.5;
+    }
+
+    .tl-card{
+      position:relative;margin-bottom:20px;
+      padding:20px 24px;background:var(--card);
+      border-radius:12px;border:1px solid var(--line);
+      transition:all 0.3s ease;
+    }
+    .tl-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.04);transform:translateX(3px)}
+    .tl-card:last-child{margin-bottom:0}
+
+    .tl-card::before{
+      content:'★';position:absolute;left:-30px;top:22px;
+      font-size:10px;color:var(--green);
+    }
+    .tl-card::after{
+      content:'';position:absolute;left:-20px;top:27px;
+      width:16px;height:1px;border-top:1px dashed var(--green-light);opacity:0.5;
+    }
+
+    .tl-row{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+    .tl-co{font-size:14px;font-weight:600}
+    .tl-role{
+      font-size:10px;font-weight:500;padding:2px 8px;border-radius:6px;
+      background:var(--green-pale);color:var(--green);
+    }
+    .tl-date{font-size:10px;color:var(--tx3);margin-left:auto;letter-spacing:1px}
+
+    .tl-ul{list-style:none}
+    .tl-ul li{
+      position:relative;padding-left:14px;margin-bottom:3px;
+      font-size:12px;color:var(--tx2);line-height:1.8;
+    }
+    .tl-ul li::before{
+      content:'·';position:absolute;left:2px;top:0;
+      color:var(--green);font-weight:700;font-size:16px;
+    }
+
+    /* ——— Projects ——— */
+    .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    .p-card{
+      padding:18px 20px;background:var(--card);
+      border-radius:12px;border:1px solid var(--line);
+      transition:all 0.3s ease;position:relative;overflow:hidden;
+    }
+    .p-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.04);transform:translateY(-2px)}
+
+    .p-card::before{
+      content:'✦';position:absolute;top:10px;right:12px;
+      font-size:10px;color:var(--green);opacity:0.3;
+    }
+
+    .p-row{display:flex;align-items:baseline;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+    .p-name{font-size:13px;font-weight:600}
+    .p-role{
+      font-size:9px;font-weight:500;padding:1px 7px;border-radius:6px;
+      background:var(--green-pale);color:var(--green);
+    }
+    .p-desc{font-size:11.5px;color:var(--tx2);line-height:1.75}
+
+    /* ——— Awards ——— */
+    .awards-row{
+      display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;
+    }
+    .award-tag{
+      display:flex;align-items:center;gap:5px;
+      padding:5px 14px;border-radius:10px;font-size:10.5px;
+      background:var(--card);border:1px solid var(--line);color:var(--tx2);
+      transition:all 0.3s;
+    }
+    .award-tag:hover{border-color:var(--green-light);color:var(--green)}
+    .award-tag::before{content:'🏆';font-size:10px}
+
+    /* ——— Portfolio — Horizontal scroll ——— */
+    .works-section{
+      padding:48px 0 60px;position:relative;
+    }
+    .works-section .sec-head-wrap{
+      max-width:960px;margin:0 auto;padding:0 48px;
+    }
+
+    .works-scroll{
+      display:flex;gap:28px;
+      overflow-x:auto;scroll-snap-type:x mandatory;
+      padding:20px 48px 30px;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+      scrollbar-color:var(--green-light) transparent;
+    }
+    .works-scroll::-webkit-scrollbar{height:6px}
+    .works-scroll::-webkit-scrollbar-track{background:transparent}
+    .works-scroll::-webkit-scrollbar-thumb{background:var(--green-light);border-radius:3px}
+
+    .w-card{
+      flex:0 0 min(480px,80vw);
+      scroll-snap-align:center;
+      background:var(--card);border-radius:12px;
+      overflow:hidden;border:1px solid var(--line);
+      transition:all 0.35s ease;position:relative;
+    }
+    .w-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.06);transform:translateY(-3px)}
+
+    .w-card video{width:100%;aspect-ratio:16/9;display:block;background:#141312}
+
+    .w-body{padding:20px 24px 24px}
+    .w-body h3{
+      font-family:'Dancing Script',cursive;
+      font-size:22px;font-weight:600;margin-bottom:6px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .w-body h3::after{content:'✦';font-size:10px;color:var(--green);opacity:0.4}
+    .w-body p{font-size:12px;color:var(--tx2);line-height:1.8}
+
+    .badges{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+    .badge{
+      padding:2px 9px;border-radius:8px;font-size:9px;font-weight:500;
+      background:var(--green-pale);color:var(--green);
+    }
+
+    .scroll-hint{
+      display:flex;align-items:center;gap:8px;
+      justify-content:center;margin-top:12px;
+      font-size:9px;color:var(--tx3);letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .scroll-hint svg{width:16px;height:16px;opacity:0.4;animation:float 2s ease-in-out infinite}
+
+    /* ——— Footer ——— */
+    .footer{
+      text-align:center;padding:40px 48px 32px;position:relative;
+    }
+    .footer::before{
+      content:'';position:absolute;top:0;left:20%;right:20%;
+      height:1px;border-top:1px dashed var(--line);
+    }
+    .footer-stars{
+      display:flex;justify-content:center;gap:12px;margin-bottom:12px;
+      color:var(--green);font-size:8px;opacity:0.35;
+    }
+    .footer p{font-size:10px;color:var(--tx3);letter-spacing:1.5px}
+    .footer .script{
+      font-family:'Dancing Script',cursive;font-size:20px;
+      color:var(--tx2);margin-bottom:4px;
+    }
+    .footer-contact{
+      display:flex;gap:20px;flex-wrap:wrap;justify-content:center;
+      margin:16px 0 12px;
+    }
+    .footer-contact a{
+      display:flex;align-items:center;gap:5px;
+      text-decoration:none;font-size:11px;color:var(--tx3);
+      transition:color 0.3s;letter-spacing:0.5px;
+    }
+    .footer-contact a:hover{color:var(--green)}
+    .footer-contact svg{width:12px;height:12px;opacity:0.4}
+
+    /* ——— Reveal ——— */
+    .rv{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .rv.vis{opacity:1;transform:translateY(0)}
+    .rv-l{opacity:0;transform:translateX(-20px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .rv-l.vis{opacity:1;transform:translateX(0)}
+    .rv-r{opacity:0;transform:translateX(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .rv-r.vis{opacity:1;transform:translateX(0)}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+    /* ——— Responsive ——— */
+    @media(max-width:768px){
+      .nav{padding:14px 20px}
+      .nav.scrolled{padding:10px 20px}
+      .nav-r .nav-links{
+        display:none;position:absolute;top:100%;left:0;right:0;
+        background:rgba(253,252,250,0.98);backdrop-filter:blur(20px);
+        flex-direction:column;padding:20px;gap:14px;
+        border-bottom:1px solid var(--line);
+      }
+      .nav-r .nav-links.open{display:flex}
+      .mob-btn{display:flex}
+
+      .hero{padding:80px 20px 40px;min-height:auto}
+      .hero-script{font-size:52px}
+      .hero-photo-area{width:160px}
+      .hero-dotarc{width:210px;height:210px}
+
+      .sec{padding:32px 20px 48px}
+
+      .tl{padding-left:26px}
+      .tl-card{padding:14px 14px}
+      .tl-card::before{left:-24px}
+      .tl-card::after{left:-14px;width:10px}
+      .tl-row{flex-direction:column;gap:3px}
+      .tl-date{margin-left:0}
+
+      .proj-grid{grid-template-columns:1fr}
+
+      .works-section .sec-head-wrap{padding:0 20px}
+      .works-scroll{padding:16px 20px 24px;gap:16px}
+      .w-card{flex:0 0 min(340px,85vw)}
+
+      .w-body{padding:14px 16px 18px}
+      .footer{padding:28px 20px 24px}
+
+      .k-bubbles{display:none}
+      .hero-eval{padding:16px 18px}
+      .awards-row{justify-content:center}
+    }
+
+    [data-lang="zh"] .en{display:none}
+    [data-lang="en"] .zh{display:none}
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-logo">Amber</div>
+    <div class="nav-r">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#exp"><span class="zh">经历</span><span class="en">Experience</span></a></li>
+        <li><a href="#proj"><span class="zh">项目</span><span class="en">Projects</span></a></li>
+        <li><a href="#work"><span class="zh">作品</span><span class="en">Portfolio</span></a></li>
+      </ul>
+      <button class="lang-btn" id="langToggle"><span id="lz" class="on">中</span> / <span id="le">EN</span></button>
+      <button class="mob-btn" id="mobBtn"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="star lg" style="top:8%;left:6%;animation:twinkle 4s ease-in-out infinite">✦</span>
+    <span class="star md" style="top:14%;right:10%;animation:twinkle 5s ease-in-out infinite 1s">★</span>
+    <span class="star sm" style="top:22%;left:18%;animation:twinkle 3.5s ease-in-out infinite .5s">✦</span>
+    <span class="star md" style="bottom:20%;left:8%;animation:twinkle 4.5s ease-in-out infinite 2s">☆</span>
+    <span class="star sm" style="bottom:30%;right:6%;animation:twinkle 3s ease-in-out infinite .8s">✦</span>
+    <span class="star lg" style="bottom:12%;right:14%;animation:twinkle 5.5s ease-in-out infinite 1.5s">★</span>
+    <span class="star sm" style="top:40%;right:22%;animation:twinkle 4s ease-in-out infinite 2.5s">✧</span>
+    <span class="star sm" style="top:55%;left:10%;animation:twinkle 3.8s ease-in-out infinite 1.2s">✦</span>
+    <span class="star md" style="top:68%;right:5%;animation:twinkle 4.2s ease-in-out infinite 0.6s">✧</span>
+    <span class="star lg" style="top:35%;left:3%;animation:twinkle 5s ease-in-out infinite 1.8s">☆</span>
+    <span class="sq" style="top:12%;right:20%"></span>
+    <span class="sq" style="top:28%;left:14%"></span>
+    <span class="sq" style="bottom:22%;right:24%"></span>
+    <span class="sq" style="bottom:40%;left:6%"></span>
+    <span class="sq" style="top:50%;right:8%"></span>
+
+    <!-- Keyword bubbles -->
+    <div class="k-bubbles">
+      <span class="k-bubble" style="top:12%;left:4%;animation:bubbleDrift1 7s ease-in-out infinite">AIGC</span>
+      <span class="k-bubble" style="top:30%;right:5%;animation:bubbleDrift2 8s ease-in-out infinite 1s">Midjourney</span>
+      <span class="k-bubble" style="bottom:25%;left:3%;animation:bubbleDrift1 9s ease-in-out infinite 2s"><span class="zh">视觉设计</span><span class="en">Visual Design</span></span>
+      <span class="k-bubble" style="bottom:15%;right:8%;animation:bubbleDrift2 7.5s ease-in-out infinite 0.5s">Kling</span>
+      <span class="k-bubble" style="top:18%;right:18%;animation:bubbleDrift1 8.5s ease-in-out infinite 1.5s">Vidu</span>
+      <span class="k-bubble" style="top:60%;left:5%;animation:bubbleDrift2 9.5s ease-in-out infinite 3s"><span class="zh">提示词工程</span><span class="en">Prompt Eng.</span></span>
+      <span class="k-bubble" style="bottom:35%;right:3%;animation:bubbleDrift1 8s ease-in-out infinite 2.5s">UE5</span>
+      <span class="k-bubble" style="top:45%;left:12%;animation:bubbleDrift2 7s ease-in-out infinite 1.2s">Figma</span>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-top-label rv">
+        <span class="zh">AIGC 视觉设计师</span>
+        <span class="en">AIGC Visual Designer</span>
+      </div>
+
+      <h1 class="hero-script rv">
+        <span class="zh">Portfolio</span>
+        <span class="en">Portfolio</span>
+      </h1>
+      <p class="hero-cn rv">
+        <span class="zh">个 人 作 品 集</span>
+        <span class="en">Personal Collection</span>
+      </p>
+
+      <div class="hero-photo-area rv">
+        <img src="assets/photo.png" alt="Amber · 朱心蕊">
+        <div class="hero-dotarc"></div>
+      </div>
+      <p class="hero-subtitle rv">
+        <span class="zh">朱心蕊 · Amber</span>
+        <span class="en">Amber Zhu</span>
+      </p>
+      <p class="hero-edu rv">
+        <span class="zh">天津外国语大学 · 2022 级数字媒体艺术 ｜ 主修剧本创作、非线性编辑、分镜头制作、高级影像创作</span>
+        <span class="en">Tianjin Foreign Studies University · Class of 2022, Digital Media Art</span>
+      </p>
+
+      <div class="contact-row rv">
+        <a href="mailto:2590761086@qq.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>2590761086@qq.com</a>
+        <a href="tel:15256660762"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>15256660762</a>
+      </div>
+
+      <div class="skill-tags">
+        <span class="rv d1">Midjourney</span><span class="rv d2">Vidu</span><span class="rv d3">Kling</span>
+        <span class="rv d1">Premiere Pro</span><span class="rv d3">After Effects</span>
+        <span class="rv d2">Figma</span><span class="rv d4">DaVinci</span><span class="rv d3">UE5</span>
+        <span class="rv d1">Photoshop</span><span class="rv d2"><span class="zh">即梦</span><span class="en">Jimeng</span></span>
+      </div>
+
+      <div class="hero-eval rv">
+        <p><span class="zh"><b>善于创新</b>，喜欢钻研。曾在一周内完成一款<b>独立中式解谜游戏 demo</b>。<b>新事物接受能力强</b>，熟练运用 <b>Midjourney</b>、<b>可灵</b>、<b>即梦</b>、<b>Gemini</b>、<b>Vidu</b> 等 AIGC 工具。</span><span class="en"><b>Innovative</b> and dedicated — built an indie <b>Chinese puzzle game demo</b> within one week. Quick to adapt, proficient in <b>Midjourney</b>, <b>Kling</b>, <b>Jimeng</b>, <b>Gemini</b>, and <b>Vidu</b>.</span></p>
+        <p><span class="zh">具备 <b>AI 视觉内容审美</b>与<b>真伪识别能力</b>，能高效判断生成视频与图像质量并<b>优化创意方向</b>。</span><span class="en">Skilled in <b>AI visual aesthetics</b> and <b>authenticity evaluation</b>, efficiently optimizing <b>creative direction</b>.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 Experience -->
+  <section class="sec" id="exp">
+    <span class="sec-star" style="top:20px;right:40px;font-size:18px;opacity:0.2">✦</span>
+    <span class="sec-star" style="bottom:30px;left:20px;font-size:12px;opacity:0.15">★</span>
+    <div class="sec-head rv">
+      <span class="sec-n">01</span>
+      <div><div class="sec-t"><span class="zh">工作经历</span><span class="en">Experience</span></div><div class="sec-s"><span class="zh">实习经验</span><span class="en">Internships</span></div></div>
+      <div class="sec-l"></div>
+    </div>
+    <div class="tl">
+      <div class="tl-card rv">
+        <div class="tl-row">
+          <span class="tl-co"><span class="zh">生数科技（Vidu）</span><span class="en">Shengshu Tech (Vidu)</span></span>
+          <span class="tl-role"><span class="zh">AI 创意设计师</span><span class="en">AI Creative Designer</span></span>
+          <span class="tl-date">2025.07 — 2026.01</span>
+        </div>
+        <ul class="tl-ul">
+          <li><span class="zh"><b>AIGC 特效模版研发</b>：协助产品完成爆款视频特效研发，撰写成功率 <b>>85%</b> 的高稳定性特效提示词。已上线"圣诞小人、变身星期三"等近 <b>50 个</b>特效脚本，产出<b>标准化</b>、<b>可商用</b> AI 视频模版</span><span class="en"><b>AIGC VFX Template R&D</b>: Developed trending VFX, authored prompts with <b>>85%</b> success rate. Launched ~<b>50</b> scripts for <b>standardized, commercial</b> AI video templates</span></li>
+          <li><span class="zh"><b>电商 Agent 优化</b>：深度参与基于 <b>Vidu 模型</b>的电商 Agent 系统测试，撰写海外场景下故事性电商脚本，根据<b>三段式结构</b>重点研发具有<b>强视觉冲击力</b>广告。分析使用场景及目标人群，为<b>美妆、电子产品</b>等品类定制专属提示词框架，大幅提高画面精彩度，推动 Agent <b>成功上线</b></span><span class="en"><b>E-commerce Agent</b>: Tested <b>Vidu model</b>-based Agent, crafted <b>three-act</b> scripts for <b>high visual impact</b> ads, customized frameworks for <b>beauty & electronics</b>, driving Agent <b>launch</b></span></li>
+          <li><span class="zh"><b>联想词迭代</b>：调试 APP 端提示词联想逻辑，加入<b>故事感联想</b>，引导用户从单一描述转向更具戏剧张力的描述，降低<b>泛 C 用户</b>创作门槛，基于<b>点击率</b>反向调优；加入<b>多语言融合</b>功能吸引西班牙、德国等国家用户入驻</span><span class="en"><b>Prompt Suggestion</b>: Tuned prompt logic with <b>narrative associations</b>, lowering <b>general user</b> barriers, optimized via <b>CTR</b>; added <b>multilingual</b> features for international growth</span></li>
+          <li><span class="zh"><b>蒙牛 AIGC 广告制作</b>：参与蒙牛 AIGC 广告内容制作，基于项目脚本完成<b>分镜拆解</b>，使用 <b>Kling</b>、<b>Seedance</b> 等多家 AI 平台进行生图、生视频及 <b>PS 精修</b>，输出 <b>TVC 级</b>影视内容</span><span class="en"><b>Mengniu AIGC Ad</b>: Produced AIGC ad content, completed <b>storyboard breakdown</b>, used <b>Kling</b>, <b>Seedance</b> for image/video generation and <b>PS refinement</b>, delivering <b>TVC-grade</b> content</span></li>
+        </ul>
+      </div>
+      <div class="tl-card rv">
+        <div class="tl-row">
+          <span class="tl-co"><span class="zh">澜景科技</span><span class="en">Lanjing Technology</span></span>
+          <span class="tl-role"><span class="zh">UI 设计师</span><span class="en">UI Designer</span></span>
+          <span class="tl-date">2025.05 — 2025.07</span>
+        </div>
+        <ul class="tl-ul">
+          <li><span class="zh"><b>视觉设计</b>：负责澜精灵 <b>2.0 版本</b> AI 页面<b>动效</b>、<b>Icon 设计</b>、<b>UI 界面</b>绘制与视觉规范搭建，使用 <b>Figma</b> 输出 UI 页面 <b>80+</b>。采用"<b>原创构思—AIGC 参考—手动优化</b>"流程，确保设计独特且满足用户体验需求，支撑<b>新版本顺利上线</b></span><span class="en"><b>Visual Design</b>: Led <b>v2.0</b> AI page <b>motion design</b>, <b>icon</b>, <b>UI interface</b> and visual standards, delivering <b>80+</b> <b>Figma</b> pages. Used "<b>original concept → AIGC reference → manual refinement</b>" workflow, supporting <b>successful launch</b></span></li>
+          <li><span class="zh"><b>体验优化</b>：基于原型测试提出 <b>10 余条</b>交互与视觉优化建议，二次测试后 APP 端用户操作准确性提升 <b>50%</b></span><span class="en"><b>UX Optimization</b>: Proposed <b>10+</b> improvements from prototype testing, achieving <b>50%</b> boost in app operation accuracy</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Projects -->
+  <section class="sec" id="proj">
+    <span class="sec-star" style="top:10px;right:60px;font-size:14px;opacity:0.18">★</span>
+    <span class="sec-star" style="bottom:20px;right:30px;font-size:10px;opacity:0.12">✦</span>
+    <div class="sec-head rv">
+      <span class="sec-n">02</span>
+      <div><div class="sec-t"><span class="zh">项目经历</span><span class="en">Projects</span></div><div class="sec-s"><span class="zh">项目与校园经历</span><span class="en">Projects & Campus</span></div></div>
+      <div class="sec-l"></div>
+    </div>
+    <div class="proj-grid">
+      <div class="p-card rv">
+        <div class="p-row">
+          <span class="p-name"><span class="zh">科普类解谜游戏</span><span class="en">Educational Puzzle Game</span></span>
+          <span class="p-role"><span class="zh">项目负责人</span><span class="en">Lead</span></span>
+        </div>
+        <p class="p-desc"><span class="zh">使用 <b>Pr</b>、<b>Ae</b>、<b>Unity</b> 制作，成功结项<b>省级大学生创新创业项目</b>，获得<b>一万元</b>项目基金。</span><span class="en">Built with <b>Pr</b>, <b>Ae</b>, <b>Unity</b>. Completed as a <b>provincial innovation project</b> with <b>¥10K</b> grant.</span></p>
+      </div>
+      <div class="p-card rv">
+        <div class="p-row">
+          <span class="p-name"><span class="zh">AIGC+AR 策略桌游</span><span class="en">AIGC + AR Strategy Board Game</span></span>
+          <span class="p-role"><span class="zh">项目负责人</span><span class="en">Lead</span></span>
+        </div>
+        <p class="p-desc"><span class="zh">负责一款融合 <b>AIGC</b> 与 <b>AR 技术</b>的策略类桌游设计，利用 AIGC 生成<b>美术资产</b>，结合 AR 技术增强游戏<b>沉浸感</b>，探索实体桌游的沉浸式呈现方式。</span><span class="en">Designed a strategy board game integrating <b>AIGC</b> and <b>AR technology</b>, using AIGC for <b>art assets</b> and AR for enhanced <b>immersion</b>.</span></p>
+      </div>
+      <div class="p-card rv">
+        <div class="p-row">
+          <span class="p-name"><span class="zh">自媒体运营</span><span class="en">Social Media</span></span>
+          <span class="p-role"><span class="zh">独立运营</span><span class="en">Solo</span></span>
+        </div>
+        <p class="p-desc"><span class="zh">独立完成<b>脚本策划、拍摄剪辑、数据跟进</b>。拼豆 vlog <b>浏览量 140 万</b>，自主构思 <b>AI 生成拼豆图纸指令</b>，获 <b>17 万流量激励</b>和<b>智联招聘平台入驻邀请</b>。</span><span class="en">Solo <b>scripting, filming, editing</b>. Perler bead vlog <b>1.4M views</b>, crafted <b>AI bead prompts</b>, earned <b>170K incentives</b> and recruitment platform invitation.</span></p>
+      </div>
+    </div>
+
+    <!-- Awards -->
+    <div class="awards-row rv">
+      <span class="award-tag"><span class="zh">NCDA 省级三等奖</span><span class="en">NCDA Provincial 3rd</span></span>
+      <span class="award-tag"><span class="zh">省级三好学生</span><span class="en">Provincial Outstanding</span></span>
+      <span class="award-tag"><span class="zh">支付宝 AIGC 大赛全国优秀奖</span><span class="en">Alipay AIGC National Award</span></span>
+      <span class="award-tag"><span class="zh">校长二等奖学金</span><span class="en">President's Scholarship</span></span>
+      <span class="award-tag"><span class="zh">时报金犊奖亚洲赛区优秀奖</span><span class="en">Times Golden Calf Asia Award</span></span>
+      <span class="award-tag">CET-4</span>
+    </div>
+  </section>
+
+  <!-- 03 Portfolio — Horizontal scroll -->
+  <section class="works-section" id="work">
+    <div class="sec-head-wrap">
+      <div class="sec-head rv">
+        <span class="sec-n">03</span>
+        <div><div class="sec-t"><span class="zh">作品展示</span><span class="en">Portfolio</span></div><div class="sec-s"><span class="zh">精选视频作品</span><span class="en">Selected Works</span></div></div>
+        <div class="sec-l"></div>
+      </div>
+    </div>
+
+    <div class="works-scroll">
+      <div class="w-card rv">
+        <video controls preload="metadata" playsinline poster="assets/poster-mengniu.jpg"><source src="assets/蒙牛-前进篇.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3><span class="zh">《蒙牛·前进篇》</span><span class="en">"Mengniu · Forward"</span></h3>
+          <p><span class="zh">参与制作蒙牛《前进篇》AIGC 广告内容，根据脚本完成分镜拆解，使用 Kling 3.0、Nano-banana 等 AI 平台配合 PS 精修，输出 TVC 级影视内容。</span><span class="en">Produced Mengniu "Forward" AIGC ad, completed storyboard breakdown using Kling 3.0, Nano-banana and PS refinement, delivering TVC-grade content.</span></p>
+          <div class="badges"><span class="badge">AIGC</span><span class="badge">Kling 3.0</span><span class="badge">Nano-banana</span><span class="badge">TVC</span></div>
+        </div>
+      </div>
+      <div class="w-card rv">
+        <video controls preload="metadata" playsinline poster="assets/poster-vaporesso.jpg"><source src="assets/vaporesso-bts.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3><span class="zh">《VAPORESSO 幕后》</span><span class="en">"VAPORESSO Behind the Scenes"</span></h3>
+          <p><span class="zh">为全 AI 制作的 VAPORESSO 广告成片打造幕后花絮短片，完整展现 AI 创作全流程——从脚本构思到最终成片，视频号发布后获得<b>四位数转发量</b>。</span><span class="en">Created a behind-the-scenes short for the fully AI-produced VAPORESSO ad, showcasing the complete AI creation workflow. Achieved <b>4-digit reposts</b> on Channels.</span></p>
+          <div class="badges"><span class="badge"><span class="zh">全 AI 制作</span><span class="en">Full AI</span></span><span class="badge"><span class="zh">幕后花絮</span><span class="en">BTS</span></span><span class="badge"><span class="zh">四位数转发</span><span class="en">Viral</span></span></div>
+        </div>
+      </div>
+      <div class="w-card rv">
+        <video controls preload="metadata" playsinline poster="assets/poster1.jpg"><source src="assets/work1.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3>《Lemon》</h3>
+          <p><span class="zh">一款 AIGC 生成的夏日解暑的饮料广告，使用 Tapnow 平台制作，从脚本—分镜—生图—生视频—生 BGM—剪辑合成皆为一人独立完成。</span><span class="en">A summer beverage ad made with AIGC on Tapnow. Script, storyboard, images, video, BGM, editing — all independently completed.</span></p>
+          <div class="badges"><span class="badge">AIGC</span><span class="badge">Tapnow</span><span class="badge"><span class="zh">独立完成</span><span class="en">Solo</span></span></div>
+        </div>
+      </div>
+      <div class="w-card rv">
+        <video controls preload="metadata" playsinline poster="assets/poster2.jpg"><source src="assets/work2.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3><span class="zh">《平行天津》</span><span class="en">"Parallel Tianjin"</span></h3>
+          <p><span class="zh">特效类城市宣传片，使用 AE、PR 制作，实地无人机取景，2024 年第 12 届全国高校数字艺术设计大赛（NCDA），荣获省级三等奖。</span><span class="en">VFX city promo with AE & PR, drone-shot on location. Provincial 3rd prize at 12th NCDA 2024.</span></p>
+          <div class="badges"><span class="badge">After Effects</span><span class="badge">Premiere Pro</span><span class="badge"><span class="zh">NCDA 省三等奖</span><span class="en">NCDA 3rd Prize</span></span></div>
+        </div>
+      </div>
+      <div class="w-card rv">
+        <video controls preload="metadata" playsinline poster="assets/poster3.jpg"><source src="assets/work3.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3><span class="zh">《长梦歌》</span><span class="en">"Song of Eternal Dreams"</span></h3>
+          <p><span class="zh">使用 UE5 在一周内制作完成的中式解谜游戏 demo，由杨贵妃的死亡开展谜题，涉及交互 10 余种。</span><span class="en">Chinese puzzle game demo built with UE5 in one week, mysteries around Yang Guifei's death, 10+ interaction types.</span></p>
+          <div class="badges"><span class="badge">UE5</span><span class="badge"><span class="zh">中式解谜</span><span class="en">Chinese Puzzle</span></span><span class="badge"><span class="zh">一周完成</span><span class="en">1 Week</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint rv">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span class="zh">左右滑动查看更多</span>
+      <span class="en">Scroll to see more</span>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="script rv">
+      <span class="zh">感谢您的观看</span>
+      <span class="en">Thank You</span>
+    </p>
+    <div class="footer-contact rv">
+      <a href="mailto:2590761086@qq.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>2590761086@qq.com</a>
+      <a href="tel:15256660762"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>15256660762</a>
+    </div>
+    <div class="footer-stars">✦ ★ ✦ ★ ✦</div>
+    <p><span class="zh">&copy; 2026 Amber · AIGC 视觉设计师</span><span class="en">&copy; 2026 Amber · AIGC Visual Designer</span></p>
+  </footer>
+
+  <script>
+    const html=document.documentElement;
+    document.getElementById('langToggle').addEventListener('click',()=>{
+      const n=html.dataset.lang==='zh'?'en':'zh';
+      html.dataset.lang=n;html.lang=n==='zh'?'zh-CN':'en';
+      document.getElementById('lz').classList.toggle('on',n==='zh');
+      document.getElementById('le').classList.toggle('on',n==='en');
+    });
+    const mb=document.getElementById('mobBtn'),nl=document.getElementById('navLinks');
+    mb.addEventListener('click',()=>nl.classList.toggle('open'));
+    nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+    window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40)},{passive:true});
+    const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:0.06,rootMargin:'0px 0px -20px 0px'});
+    document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>obs.observe(el));
+  </script>
+
+</body>
+</html>

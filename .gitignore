@@ -1,0 +1,7 @@
+# Original large source files (web-optimized versions used instead)
+assets/251_raw.MP4
+assets/mengniu.mov
+
+# OS
+.DS_Store
+Thumbs.db
