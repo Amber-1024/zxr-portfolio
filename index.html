@@ -600,7 +600,7 @@
 
     <div class="works-scroll">
       <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster-mengniu.jpg" data-src="assets/蒙牛-前进篇.mp4"></video>
+        <video controls preload="auto" playsinline poster="assets/poster-mengniu.jpg"><source src="assets/蒙牛-前进篇.mp4" type="video/mp4"></video>
         <div class="w-body">
           <h3><span class="zh">《蒙牛·前进篇》</span><span class="en">"Mengniu · Forward"</span></h3>
           <p><span class="zh">参与制作蒙牛《前进篇》AIGC 广告内容，根据脚本完成分镜拆解，使用 Kling 3.0、Nano-banana 等 AI 平台配合 PS 精修，输出 TVC 级影视内容。</span><span class="en">Produced Mengniu "Forward" AIGC ad, completed storyboard breakdown using Kling 3.0, Nano-banana and PS refinement, delivering TVC-grade content.</span></p>
@@ -608,7 +608,7 @@
         </div>
       </div>
       <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster-vaporesso.jpg" data-src="assets/vaporesso-bts.mp4"></video>
+        <video controls preload="none" playsinline poster="assets/poster-vaporesso.jpg"><source src="assets/vaporesso-bts.mp4" type="video/mp4"></video>
         <div class="w-body">
           <h3><span class="zh">《VAPORESSO 幕后》</span><span class="en">"VAPORESSO Behind the Scenes"</span></h3>
           <p><span class="zh">为全 AI 制作的 VAPORESSO 广告成片打造幕后花絮短片，完整展现 AI 创作全流程——从脚本构思到最终成片，视频号发布后获得<b>四位数转发量</b>。</span><span class="en">Created a behind-the-scenes short for the fully AI-produced VAPORESSO ad, showcasing the complete AI creation workflow. Achieved <b>4-digit reposts</b> on Channels.</span></p>
@@ -616,7 +616,7 @@
         </div>
       </div>
       <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster1.jpg" data-src="assets/work1.mp4"></video>
+        <video controls preload="none" playsinline poster="assets/poster1.jpg"><source src="assets/work1.mp4" type="video/mp4"></video>
         <div class="w-body">
           <h3>《Lemon》</h3>
           <p><span class="zh">一款 AIGC 生成的夏日解暑的饮料广告，使用 Tapnow 平台制作，从脚本—分镜—生图—生视频—生 BGM—剪辑合成皆为一人独立完成。</span><span class="en">A summer beverage ad made with AIGC on Tapnow. Script, storyboard, images, video, BGM, editing — all independently completed.</span></p>
@@ -624,7 +624,7 @@
         </div>
       </div>
       <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster2.jpg" data-src="assets/work2.mp4"></video>
+        <video controls preload="none" playsinline poster="assets/poster2.jpg"><source src="assets/work2.mp4" type="video/mp4"></video>
         <div class="w-body">
           <h3><span class="zh">《平行天津》</span><span class="en">"Parallel Tianjin"</span></h3>
           <p><span class="zh">特效类城市宣传片，使用 AE、PR 制作，实地无人机取景，2024 年第 12 届全国高校数字艺术设计大赛（NCDA），荣获省级三等奖。</span><span class="en">VFX city promo with AE & PR, drone-shot on location. Provincial 3rd prize at 12th NCDA 2024.</span></p>
@@ -632,7 +632,7 @@
         </div>
       </div>
       <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster3.jpg" data-src="assets/work3.mp4"></video>
+        <video controls preload="none" playsinline poster="assets/poster3.jpg"><source src="assets/work3.mp4" type="video/mp4"></video>
         <div class="w-body">
           <h3><span class="zh">《长梦歌》</span><span class="en">"Song of Eternal Dreams"</span></h3>
           <p><span class="zh">使用 UE5 在一周内制作完成的中式解谜游戏 demo，由杨贵妃的死亡开展谜题，涉及交互 10 余种。</span><span class="en">Chinese puzzle game demo built with UE5 in one week, mysteries around Yang Guifei's death, 10+ interaction types.</span></p>
@@ -676,17 +676,20 @@
     const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:0.06,rootMargin:'0px 0px -20px 0px'});
     document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>obs.observe(el));
 
-    const vObs=new IntersectionObserver(es=>{es.forEach(e=>{
-      if(e.isIntersecting){
-        const v=e.target,src=v.dataset.src;
-        if(src&&!v.querySelector('source')){
-          const s=document.createElement('source');
-          s.src=src;s.type='video/mp4';v.appendChild(s);v.load();
-        }
-        vObs.unobserve(v);
+    // Progressive video preloading: start caching all videos immediately after page load
+    window.addEventListener('load',()=>{
+      const vids=document.querySelectorAll('video[preload="none"]');
+      let i=0;
+      function preloadNext(){
+        if(i>=vids.length)return;
+        const v=vids[i++];
+        v.preload='auto';v.load();
+        v.addEventListener('canplaythrough',()=>setTimeout(preloadNext,500),{once:true});
+        setTimeout(preloadNext,3000); // fallback: don't wait more than 3s per video
       }
-    })},{rootMargin:'200px'});
-    document.querySelectorAll('video[data-src]').forEach(v=>vObs.observe(v));
+      // Start preloading remaining videos 1s after page load (first video already loading)
+      setTimeout(preloadNext,1000);
+    });
   </script>
 
 </body>
