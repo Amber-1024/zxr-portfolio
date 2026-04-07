@@ -164,12 +164,16 @@
     }
 
     .skill-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:24px}
-    .skill-tags span{
+    .skill-tags > span{
       padding:3px 12px;border-radius:14px;font-size:10px;font-weight:500;
       letter-spacing:0.5px;border:1px solid var(--line);color:var(--tx2);
       background:var(--card);transition:all 0.3s;
     }
-    .skill-tags span:hover{border-color:var(--green);color:var(--green)}
+    .skill-tags > span:hover{border-color:var(--green);color:var(--green)}
+    .skill-tags-label{
+      font-size:9px;color:var(--tx3);letter-spacing:2px;text-transform:uppercase;
+      margin-bottom:8px;text-align:center;
+    }
 
     /* ——— Hero evaluation ——— */
     .hero-eval{
@@ -311,10 +315,11 @@
 
     .w-body{padding:20px 24px 24px}
     .w-body h3{
-      font-family:'Dancing Script',cursive;
-      font-size:22px;font-weight:600;margin-bottom:6px;
+      font-size:20px;font-weight:600;margin-bottom:6px;
       display:flex;align-items:center;gap:8px;
     }
+    .w-body h3 .zh{font-family:'Noto Sans SC',sans-serif}
+    .w-body h3 .en{font-family:'Inter',sans-serif;letter-spacing:0.5px}
     .w-body h3::after{content:'✦';font-size:10px;color:var(--green);opacity:0.4}
     .w-body p{font-size:12px;color:var(--tx2);line-height:1.8}
 
@@ -493,17 +498,14 @@
         <a href="tel:15256660762"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>15256660762</a>
       </div>
 
+      <p class="skill-tags-label rv"><span class="zh">✦ 个人技能掌握 ✦</span><span class="en">✦ Skills ✦</span></p>
       <div class="skill-tags">
         <span class="rv d1">Midjourney</span><span class="rv d2">Vidu</span><span class="rv d3">Kling</span>
         <span class="rv d1">Premiere Pro</span><span class="rv d3">After Effects</span>
-        <span class="rv d2">Figma</span><span class="rv d4">DaVinci</span><span class="rv d3">UE5</span>
+        <span class="rv d2">Figma</span><span class="rv d3">UE5</span>
         <span class="rv d1">Photoshop</span><span class="rv d2"><span class="zh">即梦</span><span class="en">Jimeng</span></span>
       </div>
 
-      <div class="hero-eval rv">
-        <p><span class="zh"><b>善于创新</b>，喜欢钻研。曾在一周内完成一款<b>独立中式解谜游戏 demo</b>。<b>新事物接受能力强</b>，熟练运用 <b>Midjourney</b>、<b>可灵</b>、<b>即梦</b>、<b>Gemini</b>、<b>Vidu</b> 等 AIGC 工具。</span><span class="en"><b>Innovative</b> and dedicated — built an indie <b>Chinese puzzle game demo</b> within one week. Quick to adapt, proficient in <b>Midjourney</b>, <b>Kling</b>, <b>Jimeng</b>, <b>Gemini</b>, and <b>Vidu</b>.</span></p>
-        <p><span class="zh">具备 <b>AI 视觉内容审美</b>与<b>真伪识别能力</b>，能高效判断生成视频与图像质量并<b>优化创意方向</b>。</span><span class="en">Skilled in <b>AI visual aesthetics</b> and <b>authenticity evaluation</b>, efficiently optimizing <b>creative direction</b>.</span></p>
-      </div>
     </div>
   </section>
 
@@ -527,7 +529,7 @@
           <li><span class="zh"><b>AIGC 特效模版研发</b>：协助产品完成爆款视频特效研发，撰写成功率 <b>>85%</b> 的高稳定性特效提示词。已上线"圣诞小人、变身星期三"等近 <b>50 个</b>特效脚本，产出<b>标准化</b>、<b>可商用</b> AI 视频模版</span><span class="en"><b>AIGC VFX Template R&D</b>: Developed trending VFX, authored prompts with <b>>85%</b> success rate. Launched ~<b>50</b> scripts for <b>standardized, commercial</b> AI video templates</span></li>
           <li><span class="zh"><b>电商 Agent 优化</b>：深度参与基于 <b>Vidu 模型</b>的电商 Agent 系统测试，撰写海外场景下故事性电商脚本，根据<b>三段式结构</b>重点研发具有<b>强视觉冲击力</b>广告。分析使用场景及目标人群，为<b>美妆、电子产品</b>等品类定制专属提示词框架，大幅提高画面精彩度，推动 Agent <b>成功上线</b></span><span class="en"><b>E-commerce Agent</b>: Tested <b>Vidu model</b>-based Agent, crafted <b>three-act</b> scripts for <b>high visual impact</b> ads, customized frameworks for <b>beauty & electronics</b>, driving Agent <b>launch</b></span></li>
           <li><span class="zh"><b>联想词迭代</b>：调试 APP 端提示词联想逻辑，加入<b>故事感联想</b>，引导用户从单一描述转向更具戏剧张力的描述，降低<b>泛 C 用户</b>创作门槛，基于<b>点击率</b>反向调优；加入<b>多语言融合</b>功能吸引西班牙、德国等国家用户入驻</span><span class="en"><b>Prompt Suggestion</b>: Tuned prompt logic with <b>narrative associations</b>, lowering <b>general user</b> barriers, optimized via <b>CTR</b>; added <b>multilingual</b> features for international growth</span></li>
-          <li><span class="zh"><b>蒙牛 AIGC 广告制作</b>：参与蒙牛 AIGC 广告内容制作，基于项目脚本完成<b>分镜拆解</b>，使用 <b>Kling</b>、<b>Seedance</b> 等多家 AI 平台进行生图、生视频及 <b>PS 精修</b>，输出 <b>TVC 级</b>影视内容</span><span class="en"><b>Mengniu AIGC Ad</b>: Produced AIGC ad content, completed <b>storyboard breakdown</b>, used <b>Kling</b>, <b>Seedance</b> for image/video generation and <b>PS refinement</b>, delivering <b>TVC-grade</b> content</span></li>
+
         </ul>
       </div>
       <div class="tl-card rv">
@@ -556,13 +558,6 @@
     <div class="proj-grid">
       <div class="p-card rv">
         <div class="p-row">
-          <span class="p-name"><span class="zh">科普类解谜游戏</span><span class="en">Educational Puzzle Game</span></span>
-          <span class="p-role"><span class="zh">项目负责人</span><span class="en">Lead</span></span>
-        </div>
-        <p class="p-desc"><span class="zh">使用 <b>Pr</b>、<b>Ae</b>、<b>Unity</b> 制作，成功结项<b>省级大学生创新创业项目</b>，获得<b>一万元</b>项目基金。</span><span class="en">Built with <b>Pr</b>, <b>Ae</b>, <b>Unity</b>. Completed as a <b>provincial innovation project</b> with <b>¥10K</b> grant.</span></p>
-      </div>
-      <div class="p-card rv">
-        <div class="p-row">
           <span class="p-name"><span class="zh">AIGC+AR 策略桌游</span><span class="en">AIGC + AR Strategy Board Game</span></span>
           <span class="p-role"><span class="zh">项目负责人</span><span class="en">Lead</span></span>
         </div>
@@ -570,10 +565,24 @@
       </div>
       <div class="p-card rv">
         <div class="p-row">
+          <span class="p-name"><span class="zh">蒙牛 AIGC 广告制作</span><span class="en">Mengniu AIGC Ad</span></span>
+          <span class="p-role"><span class="zh">重要成员</span><span class="en">Key Member</span></span>
+        </div>
+        <p class="p-desc"><span class="zh">参与蒙牛 AIGC 广告内容制作，基于项目脚本完成<b>分镜拆解</b>，使用 <b>Kling</b>、<b>Seedance</b> 等多家 AI 平台进行生图、生视频及 <b>PS 精修</b>，输出 <b>TVC 级</b>影视内容。</span><span class="en">Produced AIGC ad content, completed <b>storyboard breakdown</b>, used <b>Kling</b>, <b>Seedance</b> for image/video generation and <b>PS refinement</b>, delivering <b>TVC-grade</b> content.</span></p>
+      </div>
+      <div class="p-card rv">
+        <div class="p-row">
           <span class="p-name"><span class="zh">自媒体运营</span><span class="en">Social Media</span></span>
           <span class="p-role"><span class="zh">独立运营</span><span class="en">Solo</span></span>
         </div>
         <p class="p-desc"><span class="zh">独立完成<b>脚本策划、拍摄剪辑、数据跟进</b>。拼豆 vlog <b>浏览量 140 万</b>，自主构思 <b>AI 生成拼豆图纸指令</b>，获 <b>17 万流量激励</b>和<b>智联招聘平台入驻邀请</b>。</span><span class="en">Solo <b>scripting, filming, editing</b>. Perler bead vlog <b>1.4M views</b>, crafted <b>AI bead prompts</b>, earned <b>170K incentives</b> and recruitment platform invitation.</span></p>
+      </div>
+      <div class="p-card rv">
+        <div class="p-row">
+          <span class="p-name"><span class="zh">科普类解谜游戏</span><span class="en">Educational Puzzle Game</span></span>
+          <span class="p-role"><span class="zh">项目负责人</span><span class="en">Lead</span></span>
+        </div>
+        <p class="p-desc"><span class="zh">使用 <b>Pr</b>、<b>Ae</b>、<b>Unity</b> 制作，成功结项<b>省级大学生创新创业项目</b>，获得<b>一万元</b>项目基金。</span><span class="en">Built with <b>Pr</b>, <b>Ae</b>, <b>Unity</b>. Completed as a <b>provincial innovation project</b> with <b>¥10K</b> grant.</span></p>
       </div>
     </div>
 
@@ -593,34 +602,26 @@
     <div class="sec-head-wrap">
       <div class="sec-head rv">
         <span class="sec-n">03</span>
-        <div><div class="sec-t"><span class="zh">作品展示</span><span class="en">Portfolio</span></div><div class="sec-s"><span class="zh">精选视频作品</span><span class="en">Selected Works</span></div></div>
+        <div><div class="sec-t"><span class="zh">作品展示 <span style="font-size:10px;font-weight:400;color:var(--tx3);letter-spacing:1px">网页端打开更流畅</span></span><span class="en">Portfolio</span></div><div class="sec-s"><span class="zh">精选视频作品</span><span class="en">Selected Works</span></div></div>
         <div class="sec-l"></div>
       </div>
     </div>
 
     <div class="works-scroll">
       <div class="w-card rv">
-        <video controls preload="auto" playsinline poster="assets/poster-mengniu.jpg"><source src="assets/蒙牛-前进篇.mp4" type="video/mp4"></video>
+        <video controls preload="auto" playsinline poster="assets/poster1.jpg"><source src="assets/work1.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3><span class="zh">《Lemon》</span><span class="en">"Lemon"</span></h3>
+          <p><span class="zh">一款 AIGC 生成的夏日解暑的饮料广告，使用 Tapnow 平台制作，从脚本—分镜—生图—生视频—生 BGM—剪辑合成皆为一人独立完成。</span><span class="en">A summer beverage ad made with AIGC on Tapnow. Script, storyboard, images, video, BGM, editing — all independently completed.</span></p>
+          <div class="badges"><span class="badge">AIGC</span><span class="badge">Tapnow</span><span class="badge"><span class="zh">独立完成</span><span class="en">Solo</span></span></div>
+        </div>
+      </div>
+      <div class="w-card rv">
+        <video controls preload="none" playsinline poster="assets/poster-mengniu.jpg"><source src="assets/蒙牛-前进篇.mp4" type="video/mp4"></video>
         <div class="w-body">
           <h3><span class="zh">《蒙牛·前进篇》</span><span class="en">"Mengniu · Forward"</span></h3>
           <p><span class="zh">参与制作蒙牛《前进篇》AIGC 广告内容，根据脚本完成分镜拆解，使用 Kling 3.0、Nano-banana 等 AI 平台配合 PS 精修，输出 TVC 级影视内容。</span><span class="en">Produced Mengniu "Forward" AIGC ad, completed storyboard breakdown using Kling 3.0, Nano-banana and PS refinement, delivering TVC-grade content.</span></p>
           <div class="badges"><span class="badge">AIGC</span><span class="badge">Kling 3.0</span><span class="badge">Nano-banana</span><span class="badge">TVC</span></div>
-        </div>
-      </div>
-      <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster-vaporesso.jpg"><source src="assets/vaporesso-bts.mp4" type="video/mp4"></video>
-        <div class="w-body">
-          <h3><span class="zh">《VAPORESSO 幕后》</span><span class="en">"VAPORESSO Behind the Scenes"</span></h3>
-          <p><span class="zh">为全 AI 制作的 VAPORESSO 广告成片打造幕后花絮短片，完整展现 AI 创作全流程——从脚本构思到最终成片，视频号发布后获得<b>四位数转发量</b>。</span><span class="en">Created a behind-the-scenes short for the fully AI-produced VAPORESSO ad, showcasing the complete AI creation workflow. Achieved <b>4-digit reposts</b> on Channels.</span></p>
-          <div class="badges"><span class="badge"><span class="zh">全 AI 制作</span><span class="en">Full AI</span></span><span class="badge"><span class="zh">幕后花絮</span><span class="en">BTS</span></span><span class="badge"><span class="zh">四位数转发</span><span class="en">Viral</span></span></div>
-        </div>
-      </div>
-      <div class="w-card rv">
-        <video controls preload="none" playsinline poster="assets/poster1.jpg"><source src="assets/work1.mp4" type="video/mp4"></video>
-        <div class="w-body">
-          <h3>《Lemon》</h3>
-          <p><span class="zh">一款 AIGC 生成的夏日解暑的饮料广告，使用 Tapnow 平台制作，从脚本—分镜—生图—生视频—生 BGM—剪辑合成皆为一人独立完成。</span><span class="en">A summer beverage ad made with AIGC on Tapnow. Script, storyboard, images, video, BGM, editing — all independently completed.</span></p>
-          <div class="badges"><span class="badge">AIGC</span><span class="badge">Tapnow</span><span class="badge"><span class="zh">独立完成</span><span class="en">Solo</span></span></div>
         </div>
       </div>
       <div class="w-card rv">
@@ -639,12 +640,33 @@
           <div class="badges"><span class="badge">UE5</span><span class="badge"><span class="zh">中式解谜</span><span class="en">Chinese Puzzle</span></span><span class="badge"><span class="zh">一周完成</span><span class="en">1 Week</span></span></div>
         </div>
       </div>
+      <div class="w-card rv">
+        <video controls preload="none" playsinline poster="assets/poster-vaporesso.jpg"><source src="assets/vaporesso-bts.mp4" type="video/mp4"></video>
+        <div class="w-body">
+          <h3><span class="zh">《VAPORESSO 幕后》</span><span class="en">"VAPORESSO Behind the Scenes"</span></h3>
+          <p><span class="zh">为全 AI 制作的 VAPORESSO 广告成片打造幕后花絮短片，完整展现 AI 创作全流程——从脚本构思到最终成片，视频号发布后获得<b>四位数转发量</b>。</span><span class="en">Created a behind-the-scenes short for the fully AI-produced VAPORESSO ad, showcasing the complete AI creation workflow. Achieved <b>4-digit reposts</b> on Channels.</span></p>
+          <div class="badges"><span class="badge"><span class="zh">全 AI 制作</span><span class="en">Full AI</span></span><span class="badge"><span class="zh">幕后花絮</span><span class="en">BTS</span></span><span class="badge"><span class="zh">四位数转发</span><span class="en">Viral</span></span></div>
+        </div>
+      </div>
     </div>
 
     <div class="scroll-hint rv">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       <span class="zh">左右滑动查看更多</span>
       <span class="en">Scroll to see more</span>
+    </div>
+  </section>
+
+  <!-- Self Evaluation -->
+  <section class="sec" style="padding-bottom:32px">
+    <div class="sec-head rv">
+      <span class="sec-n">04</span>
+      <div><div class="sec-t"><span class="zh">自我评价</span><span class="en">About Me</span></div><div class="sec-s"><span class="zh">个人特质</span><span class="en">Personal Traits</span></div></div>
+      <div class="sec-l"></div>
+    </div>
+    <div class="hero-eval rv">
+      <p><span class="zh"><b>善于创新</b>，喜欢钻研。曾在一周内完成一款<b>独立中式解谜游戏 demo</b>。<b>新事物接受能力强</b>，熟练运用 <b>Midjourney</b>、<b>可灵</b>、<b>即梦</b>、<b>Gemini</b>、<b>Vidu</b> 等 AIGC 工具。</span><span class="en"><b>Innovative</b> and dedicated — built an indie <b>Chinese puzzle game demo</b> within one week. Quick to adapt, proficient in <b>Midjourney</b>, <b>Kling</b>, <b>Jimeng</b>, <b>Gemini</b>, and <b>Vidu</b>.</span></p>
+      <p><span class="zh">具备 <b>AI 视觉内容审美</b>与<b>真伪识别能力</b>，能高效判断生成视频与图像质量并<b>优化创意方向</b>。</span><span class="en">Skilled in <b>AI visual aesthetics</b> and <b>authenticity evaluation</b>, efficiently optimizing <b>creative direction</b>.</span></p>
     </div>
   </section>
 
